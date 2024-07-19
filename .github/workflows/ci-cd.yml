@@ -37,7 +37,39 @@ jobs:
       - name: Deploy to Kubernetes
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
-          KUBECONFIG_PATH: /kubeconfig
+          KUBECONFIG_PATH: apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wisecow-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wisecow
+  template:
+    metadata:
+      labels:
+        app: wisecow
+    spec:
+      volumes:
+        - name: kubeconfig
+          secret:
+            secretName: kubeconfig
+            items:
+              - key: KUBECONFIG
+                path: /kubeconfig
+      containers:
+        - name: wisecow
+          image: rishabsingh12/wisecow-app:latest
+          ports:
+            - containerPort: 4499
+          env:
+            - name: KUBECONFIG
+              value: /home/ubuntu/.kube/config
+          volumeMounts:
+            - name: kubeconfig
+              mountPath: /home/ubuntu/.kube/config
+
         run: |
           echo "$KUBECONFIG" > "$KUBECONFIG_PATH"
           chmod 600 "$KUBECONFIG_PATH"

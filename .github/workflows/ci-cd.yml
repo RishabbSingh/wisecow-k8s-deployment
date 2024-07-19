@@ -44,8 +44,8 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@master
       with:
-         role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
-         aws-region: us-east-1   
+        role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
+        aws-region: us-east-1   
         
     - name: Create kubeconfig
       run: |

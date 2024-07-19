@@ -46,7 +46,8 @@ jobs:
         mkdir -p ${HOME}/.kube
         echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
         cat ${HOME}/.kube/config
-        whoami
+        pwd
+        echo $USER
 
     - name: Deploy to Kubernetes
       run: |

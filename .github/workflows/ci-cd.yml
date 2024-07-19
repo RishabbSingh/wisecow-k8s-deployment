@@ -47,6 +47,9 @@ jobs:
         echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ${HOME}/.kube/config
         cat ${HOME}/.kube/config
 
+    - name: List contexts
+      run: kubectl config get-contexts
+
     - name: Use context
       run: kubectl config use-context octobay-api
 

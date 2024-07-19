@@ -8,3 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Create kubeconfig
+        run: |
+          mkdir -p ${HOME}/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
+          cat ${HOME}/.kube/config

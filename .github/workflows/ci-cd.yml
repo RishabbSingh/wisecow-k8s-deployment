@@ -41,6 +41,15 @@ jobs:
       with:
         version: 'latest'
 
+    - name: Create kubeconfig
+      run: |
+        mkdir -p ${HOME}/.kube
+        echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ${HOME}/.kube/config
+        cat ${HOME}/.kube/config
+
+    - name: Use context
+      run: kubectl config use-context octobay-api
+
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f k8s/deployment.yaml

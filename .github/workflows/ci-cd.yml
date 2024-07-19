@@ -35,13 +35,15 @@ jobs:
         with:
           version: 'latest'
       - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
           KUBECONFIG_PATH: /kubeconfig
+        run: |
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
       - name: Save kubeconfig
         run: |
           mkdir -p ~/.kube
           echo $KUBECONFIG > ~/.kube/config
+          chmod 600 ~/.kube/config
+

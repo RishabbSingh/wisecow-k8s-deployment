@@ -39,13 +39,11 @@ jobs:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
           KUBECONFIG_PATH: /kubeconfig
         run: |
+          echo "$KUBECONFIG" > "$KUBECONFIG_PATH"
+          chmod 600 "$KUBECONFIG_PATH"
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
       - name: Save kubeconfig
         run: |
-         echo "$KUBECONFIG" > "$KUBECONFIG_PATH"
-         chmod 600 "$KUBECONFIG_PATH"
-         kubectl apply -f deployment.yaml
-         kubectl apply -f service.yaml
-
-
+          echo "$KUBECONFIG" > "$KUBECONFIG_PATH"
+          chmod 600 "$KUBECONFIG_PATH"

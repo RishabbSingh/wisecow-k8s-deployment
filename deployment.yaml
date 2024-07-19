@@ -12,21 +12,8 @@ spec:
       labels:
         app: wisecow
     spec:
-      volumes:
-        - name: kubeconfig
-          secret:
-            secretName: kubeconfig
-            items:
-              - key: KUBECONFIG
-                path: /kubeconfig
       containers:
-        - name: wisecow
-          image: rishabsingh12/wisecow-app:latest
-          ports:
-            - containerPort: 4499
-          env:
-            - name: KUBECONFIG
-              value: /home/ubuntu/.kube/config
-          volumeMounts:
-            - name: kubeconfig
-              mountPath: /home/ubuntu/.kube/config
+      - name: wisecow
+        image: wisecow-app:latest
+        ports:
+        - containerPort: 80

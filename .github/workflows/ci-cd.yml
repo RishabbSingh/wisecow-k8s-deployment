@@ -47,4 +47,4 @@ jobs:
         kubectl apply -f deployment.yaml
         kubectl apply -f service.yaml
       env:
-        KUBECONFIG: $HOME/.kube/kconfig
+        KUBECONFIG: $HOME/.kube/config

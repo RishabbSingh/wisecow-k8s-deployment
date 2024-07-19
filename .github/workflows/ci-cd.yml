@@ -46,6 +46,7 @@ jobs:
         mkdir -p ${HOME}/.kube
         echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
         cat ${HOME}/.kube/config
+        whoami
 
     - name: Deploy to Kubernetes
       run: |
@@ -53,3 +54,4 @@ jobs:
         kubectl apply -f service.yaml
       env:
         KUBECONFIG: ${{ secrets.KUBECONFIG }}
+    

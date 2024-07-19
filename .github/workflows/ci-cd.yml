@@ -36,6 +36,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up KUBECONFIG
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+        kubectl config view
+        kubectl config current-context
+      shell: bash
+
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:
@@ -46,5 +54,4 @@ jobs:
         kubectl apply -f deployment.yaml
         kubectl apply -f service.yaml
       env:
-        KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
+        KUBECONFIG: $HOME/.kube/config

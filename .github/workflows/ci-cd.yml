@@ -40,7 +40,14 @@ jobs:
       uses: azure/setup-kubectl@v1
       with:
         version: 'latest'
-
+        
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        
     - name: Create kubeconfig
       run: |
         mkdir -p ${HOME}/.kube

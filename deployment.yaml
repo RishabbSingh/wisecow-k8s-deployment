@@ -26,4 +26,7 @@ spec:
             - containerPort: 4499
           env:
             - name: KUBECONFIG
-              value: /kubeconfig
+              value: /home/ubuntu/.kube/config
+          volumeMounts:
+            - name: kubeconfig
+              mountPath: /home/ubuntu/.kube/config

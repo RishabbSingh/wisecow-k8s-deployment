@@ -40,16 +40,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Configure AWS Credentials
+        id: aws-creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
         with:
           version: 'latest'
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
-          aws-region: us-east-1   
 
       - name: Create kubeconfig
         run: |
@@ -57,9 +58,15 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
           cat ${HOME}/.kube/config
 
+      - name: Print AWS Configuration
+        run: aws sts get-caller-identity
+
+      - name: Print Kubeconfig
+        run: cat ${HOME}/.kube/config
+
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          KUBECONFIG: ${{ secrets.KUBE_CONFIG }}

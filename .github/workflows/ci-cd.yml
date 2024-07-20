@@ -65,6 +65,12 @@ jobs:
       - name: Print Kubeconfig
         run: cat ${HOME}/.kube/config
 
+      - name: Print Cluster Info
+        run: kubectl cluster-info
+
+      - name: Test API Server Connectivity
+        run: curl -v $(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f deployment.yaml

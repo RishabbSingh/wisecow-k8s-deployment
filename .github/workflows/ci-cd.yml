@@ -61,8 +61,8 @@ jobs:
       - name: Print AWS Configuration
         run: aws sts get-caller-identity
 
-      - name: Print Kubeconfig
-        run: cat ${HOME}/.kube/config
+      # - name: Print Kubeconfig
+      #   run: cat ${HOME}/.kube/config
 
       - name: Deploy to Kubernetes
         run: |

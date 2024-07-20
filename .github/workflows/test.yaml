@@ -19,5 +19,4 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
           cat ${HOME}/.kube/config
 
-      - name: Deploy to EKS
-        run: kubectl run nginx --image=nginx
+      

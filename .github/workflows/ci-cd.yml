@@ -60,11 +60,11 @@ jobs:
           ls -l ${HOME}/.kube/
           cat ${HOME}/.kube/config
 
-      - name: List contexts
-        run: kubectl config get-contexts
+      # - name: List contexts
+      #   run: kubectl config get-contexts
 
-      - name: Use context
-        run: kubectl config use-context octobay-api
+      # - name: Use context
+      #   run: kubectl config use-context octobay-api
 
       # - name: Print AWS Configuration
       #   run: aws sts get-caller-identity

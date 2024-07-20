@@ -55,18 +55,19 @@ jobs:
       - name: Create kubeconfig
         run: |
           mkdir -p ${HOME}/.kube
-          echo "${{ secrets.KUBE_CONFIG }}"  > ${HOME}/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" > ${HOME}/.kube/config
+          ls -l ${HOME}/.kube/
           cat ${HOME}/.kube/config
 
       - name: Print AWS Configuration
         run: aws sts get-caller-identity
 
-      # - name: Print Kubeconfig
-      #   run: cat ${HOME}/.kube/config
+      - name: Print Kubeconfig
+        run: cat ${HOME}/.kube/config
 
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
         env:
-          KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBECONFIG: ${HOME}/.kube/config

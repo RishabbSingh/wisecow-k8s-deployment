@@ -74,7 +74,7 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl start apiserver
+          sudo systemctl start apiserver
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml 
         env:

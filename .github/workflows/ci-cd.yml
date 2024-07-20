@@ -56,7 +56,7 @@ jobs:
         run: |
           echo ${HOME}
           mkdir -p ${HOME}/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > ${HOME}/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
           ls -l ${HOME}/.kube/
           cat ${HOME}/.kube/config
 

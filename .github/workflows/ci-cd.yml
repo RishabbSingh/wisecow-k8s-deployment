@@ -62,4 +62,4 @@ jobs:
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
         env:
-          KUBECONFIG: ${HOME}/.kube/config
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}

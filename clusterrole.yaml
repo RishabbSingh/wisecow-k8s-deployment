@@ -4,7 +4,7 @@ metadata:
   # "namespace" omitted since ClusterRoles are not namespaced
   name: github-oidc-cluster-role
 rules:
-- apiGroups: [""]
+- apiGroups: ["*"]
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 

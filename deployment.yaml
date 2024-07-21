@@ -16,4 +16,4 @@ spec:
       - name: wisecow
         image: rishabsingh12/wisecow-app:latest
         ports:
-        - containerPort: 4499
+        - containerPort: 8080

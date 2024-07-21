@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -33,7 +33,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/wisecow-app:latest
 
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
@@ -48,20 +48,13 @@ jobs:
           aws-region: us-east-1
 
       - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
+        uses: aws-actions/eks-kubectl-action@v1
         with:
-          version: 'latest'
-
-      - name: Create kubeconfig
-        run: |
-          echo ${HOME}
-          mkdir -p ${HOME}/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
-          aws eks update-kubeconfig --region us-east-1 --name mycluster 
+          cluster-name: mycluster
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
+          region: us-east-1
 
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f deployment.yaml --validate=false
           kubectl apply -f service.yaml --validate=false
-        env:
-          KUBECONFIG: ${HOME}/.kube/config

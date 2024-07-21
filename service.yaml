@@ -10,6 +10,6 @@ spec:
       port: 4499
       targetPort: 4499
   type: LoadBalancer
-  tls:
-    - secretName: wisecow-tls  
+#  tls:
+#    - secretName: wisecow-tls  
 

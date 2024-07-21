@@ -57,26 +57,7 @@ jobs:
           echo ${HOME}
           mkdir -p ${HOME}/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
-          ls -l ${HOME}/.kube/
-          cat ${HOME}/.kube/config
-
-      # - name: List contexts
-      #   run: kubectl config get-contexts
-
-      # - name: Use context
-      #   run: kubectl config use-context octobay-api
-
-      # - name: Print AWS Configuration
-      #   run: aws sts get-caller-identity
-
-      # - name: Print Kubeconfig
-      #   run: cat ${HOME}/.kube/config
-
-      # - name: Print Cluster Info
-      #   run: kubectl cluster-info
-
-      # - name: Test API Server Connectivity
-      #   run: curl -v $(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+          aws eks update-kubeconfig --region us-east-1 --name mycluster 
 
       - name: Deploy to Kubernetes
         run: |

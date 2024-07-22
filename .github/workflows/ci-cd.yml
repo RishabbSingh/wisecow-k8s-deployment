@@ -65,19 +65,18 @@ jobs:
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
 
-      # - name: Verify Deployment
-      #   run: |
-      #     kubectl rollout status deployment/wisecow-deployment
-      #     kubectl get pods
-      #     kubectl get services
-      # kubectl rollout status deployment/wisecow-deployment || exit 1
-
       - name: Verify Deployment
         run: |
-          
-          POD_NAME=$(kubectl get pods -l app=wisecow -o jsonpath='{.items[0].metadata.name}' || echo "no-pods")
-          if [ "$POD_NAME" == "no-pods" ]; then
-            echo "No pods found with the given label. Exiting."
-            exit 1
-          fi
-          kubectl exec -it $POD_NAME -- curl -f http://localhost:4499/health || exit 1
+          kubectl rollout status deployment/wisecow-deployment
+          kubectl get pods
+          kubectl get services
+      # kubectl rollout status deployment/wisecow-deployment || exit 1
+
+      - name: Wait for Service to be Ready
+        run: |
+          sleep 30  # Wait for 30 seconds to ensure the service is up
+          kubectl get services
+          SERVICE_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          curl -f http://$SERVICE_IP/health || exit 1
+        env:
+          SERVICE_IP: ${{ secrets.SERVICE_IP }}  # Optional: If you're using a specific IP or DNS

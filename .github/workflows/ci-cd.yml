@@ -66,4 +66,12 @@ jobs:
           kubectl apply -f service.yaml
 
       - name: Verify Deployment
-        run: kubectl rollout status deployment/wisecow-deployment
+        run: |
+          kubectl rollout status deployment/wisecow-deployment
+          kubectl get pods
+          kubectl get services
+
+      - name: Run Internal Tests
+        run: |
+          POD_NAME=$(kubectl get pods -l app=wisecow-app -o jsonpath='{.items[0].metadata.name}')
+          kubectl exec -it $POD_NAME -- curl -f http://localhost:8080/health || exit 1

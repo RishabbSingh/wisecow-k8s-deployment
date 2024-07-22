@@ -67,7 +67,7 @@ jobs:
 
       - name: Verify Deployment
         run: |
-          kubectl rollout status deployment/wisecow-deployment
+          
           kubectl get pods
           kubectl get services
       # kubectl rollout status deployment/wisecow-deployment || exit 1

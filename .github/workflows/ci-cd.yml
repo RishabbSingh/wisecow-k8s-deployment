@@ -64,7 +64,8 @@ jobs:
         run: |
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
-
+          kubectl apply -f tls-secret.yaml
+          
       - name: Verify Deployment
         run: |
           # Wait for the service to be fully set up

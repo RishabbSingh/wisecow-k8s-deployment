@@ -27,7 +27,7 @@ jobs:
         sudo mv ./kubectl /usr/local/bin/kubectl
 
     - name: Configure kubectl
-      run: aws eks update-kubeconfig --name project-eks --region us-east-1
+      run: aws eks update-kubeconfig --name mycluster --region us-east-1
 
     - name: Test kubectl
       run: kubectl get nodes

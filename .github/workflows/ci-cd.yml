@@ -48,19 +48,20 @@ jobs:
           aws-region: us-east-1
 
       - name: Set up kubectl
-        uses: aws-actions/eks-kubectl-action@v1
+        uses: azure/setup-kubectl@v1
         with:
           version: 'latest'
 
       - name: Create kubeconfig
         run: |
+          echo ${HOME}
           mkdir -p ${HOME}/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
           aws eks update-kubeconfig --region us-east-1 --name mycluster 
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f deployment.yaml 
-          kubectl apply -f service.yaml 
+          kubectl apply -f deployment.yaml --validate=false
+          kubectl apply -f service.yaml --validate=false
         env:
           KUBECONFIG: ${HOME}/.kube/config

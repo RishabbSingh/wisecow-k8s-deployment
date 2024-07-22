@@ -65,13 +65,18 @@ jobs:
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
 
+      # - name: Verify Deployment
+      #   run: |
+      #     kubectl rollout status deployment/wisecow-deployment
+      #     kubectl get pods
+      #     kubectl get services
+
       - name: Verify Deployment
         run: |
-          kubectl rollout status deployment/wisecow-deployment
-          kubectl get pods
-          kubectl get services
-
-      - name: Run Internal Tests
-        run: |
-          POD_NAME=$(kubectl get pods -l app=wisecow -o jsonpath='{.items[0].metadata.name}')
+          kubectl rollout status deployment/wisecow-deployment || exit 1
+          POD_NAME=$(kubectl get pods -l app=wisecow -o jsonpath='{.items[0].metadata.name}' || echo "no-pods")
+          if [ "$POD_NAME" == "no-pods" ]; then
+            echo "No pods found with the given label. Exiting."
+            exit 1
+          fi
           kubectl exec -it $POD_NAME -- curl -f http://localhost:4499/health || exit 1

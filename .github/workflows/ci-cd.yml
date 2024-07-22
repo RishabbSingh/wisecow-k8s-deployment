@@ -48,7 +48,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Set up kubectl
-        uses: actions/setup-kubectl@v1
+        uses: aws-actions/eks-kubectl-action@v1
         with:
           version: 'latest'
 

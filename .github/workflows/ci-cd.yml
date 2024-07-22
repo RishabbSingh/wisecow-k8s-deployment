@@ -67,15 +67,25 @@ jobs:
 
       - name: Verify Deployment
         run: |
-          
-          kubectl get pods
-          kubectl get services
-      # kubectl rollout status deployment/wisecow-deployment || exit 1
+          # Wait for the service to be fully set up
+          sleep 30
 
-      - name: Wait for Service to be Ready
-        run: |
-          sleep 30  # Wait for 30 seconds to ensure the service is up
+          # List all services to verify the port mapping
           kubectl get services
-          SERVICE_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          curl -f http://$SERVICE_IP:4499 || exit 1
-        
+
+          # Get the external IP or hostname for the service
+          EXTERNAL_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          
+          # Check if EXTERNAL_IP is empty and try IP if hostname not available
+          if [ -z "$EXTERNAL_IP" ]; then
+            EXTERNAL_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          fi
+
+          # If still empty, exit with error
+          if [ -z "$EXTERNAL_IP" ]; then
+            echo "External IP or hostname not found. Exiting."
+            exit 1
+          fi
+
+          # Perform a health check against the service
+          curl -f http://$EXTERNAL_IP:4499 || exit 1

@@ -9,12 +9,8 @@ This project includes two Python scripts that monitor application status and sys
 
 This script checks the status of a web application by sending an HTTP GET request to a specified URL and reports if the application is up or down.
 
-**Code:**
 
-python
-
-Copy code
-
+```bash
 `import requests
 
 def check_application_status(url):
@@ -33,36 +29,29 @@ if __name__ == "__main__":
     url = "https://google.com"
     status = check_application_status(url)
     print(status)`
-
+```
 **Usage:**
 
 1.  Ensure you have the `requests` library installed. You can install it using pip:
 
-    bash
-
-    Copy code
+    ```bash
 
     `pip install requests`
 
+    ```
 2.  Run the script:
 
-    bash
-
-    Copy code
+    ```bash
 
     `python status.py`
-
+    ```
     The script will output the status of the application.
 
 #### 2\. `system-monitor.py`
 
 This script monitors system health by checking CPU usage, memory usage, disk usage, and running processes. It logs any issues to a log file and prints alerts to the console.
 
-**Code:**
-
-python
-
-Copy code
+```bash
 
 `import os
 import psutil
@@ -118,25 +107,20 @@ if __name__ == "__main__":
     check_memory_usage()
     check_disk_usage()
     check_running_processes()`
-
+```
 **Usage:**
 
 1.  Ensure you have the `psutil` library installed. You can install it using pip:
 
-    bash
-
-    Copy code
+    ```bash
 
     `pip install psutil`
-
+    ```
 2.  Ensure the log directory exists and is writable. If `/var/log/` does not exist or is not writable, modify the logging configuration to use a different directory.
 
 3.  Run the script:
 
-    bash
-
-    Copy code
-
+  ```bash
     `python system-monitor.py`
-
+  ```
     The script will print alerts to the console and log them to `/var/log/system_health.log`.

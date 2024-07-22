@@ -3,7 +3,7 @@ name: Deploy to EKS
 on:
   push:
     branches:
-      - main
+      - main  # Adjust this if you want to trigger on a different branch
 
 jobs:
   deploy:
@@ -26,12 +26,21 @@ jobs:
         chmod +x ./kubectl
         sudo mv ./kubectl /usr/local/bin/kubectl
 
+    - name: Check if EKS cluster exists
+      run: aws eks describe-cluster --name mycluster --region us-east-1
+
     - name: Configure kubectl
       run: aws eks update-kubeconfig --name mycluster --region us-east-1
 
-    - name: Test kubectl
-      run: kubectl get nodes
+    - name: Apply Cluster Role and Role Binding
+      run: |
+        kubectl apply -f clusterrole.yaml
+        kubectl apply -f clusterrolebinding.yaml
 
-    - name: Deploy to Kubernetes
+    - name: Apply Deployment and Service
       run: |
         kubectl apply -f deployment.yaml
+        kubectl apply -f service.yaml
+
+    - name: Verify Deployment
+      run: kubectl rollout status deployment/wisecow-deployment

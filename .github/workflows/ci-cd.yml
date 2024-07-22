@@ -77,6 +77,6 @@ jobs:
           sleep 30  # Wait for 30 seconds to ensure the service is up
           kubectl get services
           SERVICE_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          curl -f http://$SERVICE_IP/health || exit 1
+          curl -f http://$SERVICE_IP || exit 1
         env:
           SERVICE_IP: ${{ secrets.SERVICE_IP }}  # Optional: If you're using a specific IP or DNS

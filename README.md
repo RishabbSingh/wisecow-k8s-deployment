@@ -1,4 +1,4 @@
-Project: System Health Monitoring
+Problem Statement 2: 
 ---------------------------------
 
 This project includes two Python scripts that monitor application status and system health. The scripts are designed to run on a server or any system where you need to ensure the application is running smoothly and the system resources are within acceptable thresholds.
@@ -121,6 +121,6 @@ if __name__ == "__main__":
 3.  Run the script:
 
   ```bash
-    `python system-monitor.py`
+    python system-monitor.py
   ```
     The script will print alerts to the console and log them to `/var/log/system_health.log`.

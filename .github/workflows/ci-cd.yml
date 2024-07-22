@@ -76,16 +76,16 @@ jobs:
           # Get the external IP or hostname for the service
           EXTERNAL_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
           
-          # Check if EXTERNAL_IP is empty and try IP if hostname not available
-          if [ -z "$EXTERNAL_IP" ]; then
-            EXTERNAL_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          fi
+          # # Check if EXTERNAL_IP is empty and try IP if hostname not available
+          # if [ -z "$EXTERNAL_IP" ]; then
+          #   EXTERNAL_IP=$(kubectl get service wisecow-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          # fi
 
-          # If still empty, exit with error
-          if [ -z "$EXTERNAL_IP" ]; then
-            echo "External IP or hostname not found. Exiting."
-            exit 1
-          fi
+          # # If still empty, exit with error
+          # if [ -z "$EXTERNAL_IP" ]; then
+          #   echo "External IP or hostname not found. Exiting."
+          #   exit 1
+          # fi
 
           # Perform a health check against the service
           curl -f http://$EXTERNAL_IP:4499 || exit 1

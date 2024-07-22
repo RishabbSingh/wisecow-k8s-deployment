@@ -11,7 +11,7 @@ This script checks the status of a web application by sending an HTTP GET reques
 
 
 ```bash
-`import requests
+import requests
 
 def check_application_status(url):
     try:
@@ -36,24 +36,24 @@ if __name__ == "__main__":
 
     ```bash
 
-    `pip install requests`
+    pip install requests
 
     ```
 2.  Run the script:
 
     ```bash
 
-    `python status.py`
+    python status.py
     ```
     The script will output the status of the application.
 
-#### 2\. `system-monitor.py`
+#### 2\. system-monitor.py
 
 This script monitors system health by checking CPU usage, memory usage, disk usage, and running processes. It logs any issues to a log file and prints alerts to the console.
 
 ```bash
 
-`import os
+import os
 import psutil
 import logging
 from datetime import datetime
@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     ```bash
 
-    `pip install psutil`
+    pip install psutil
     ```
 2.  Ensure the log directory exists and is writable. If `/var/log/` does not exist or is not writable, modify the logging configuration to use a different directory.
 

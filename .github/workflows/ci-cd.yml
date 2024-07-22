@@ -89,4 +89,4 @@ jobs:
           # fi
 
           # Perform a health check against the service
-          curl -f http://$EXTERNAL_IP:4499 || exit 1
+          curl -f https://$EXTERNAL_IP:4499 || exit 1

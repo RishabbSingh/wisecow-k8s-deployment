@@ -74,4 +74,4 @@ jobs:
       - name: Run Internal Tests
         run: |
           POD_NAME=$(kubectl get pods -l app=wisecow -o jsonpath='{.items[0].metadata.name}')
-          kubectl exec -it $POD_NAME -- curl -f http://localhost:8080/health || exit 1
+          kubectl exec -it $POD_NAME -- curl -f http://localhost:4499/health || exit 1
